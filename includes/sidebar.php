@@ -16,6 +16,28 @@
         <!-- /.input-group -->
     </div>
 
+
+    <!-- Blog Search Well -->
+    <div class="well">
+        <h4>Login</h4>
+        <form action="includes/login.php" method="post">
+        <div class="form-gorup">
+            <input name="username" type="text" class="form-control" placeholder="Enter Username">
+        </div>
+        <br />
+
+        <div class="input-group">
+            <input name="password" type="password" class="form-control" placeholder="Enter a password">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" name="login" type="submit">Submit</button>
+            </span>
+        </div>
+
+        </form><!-- search form -->
+        <!-- /.input-group -->
+    </div>
+
+
     <?php
 
     $query = "SELECT * FROM categories";

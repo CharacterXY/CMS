@@ -1,6 +1,6 @@
 <?php include "includes/db.php"; ?>
-
 <?php include "includes/header.php"; ?> 
+
 
     <!-- Navigation -->
     <?php include "includes/navigation.php"; ?>
@@ -42,8 +42,7 @@
                     <small>Secondary Text</small>
                 </h1>
                 
-                <!-- First Blog Post -->
-                         
+                <!-- First Blog Post -->          
                 <h2>
                     <a href="#"></a>
                 </h2>
@@ -52,19 +51,15 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?> </p>
                 <hr>
-                <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
-                
+                <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">      
                 <hr>
                 <p><?php echo $post_content; ?></p>
-               
-                
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-                
+                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>    
                 <hr>
 
             <?php } ?>
 
-            <!-- Comments Form -->
+            <!-- Blog Comments -->
 
             <?php
 
@@ -78,14 +73,20 @@
                 $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
                 $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now() )";
 
-                $create_comment = mysqli_query($connection, $query);
-                if($create_comment){
+                $create_comment_query = mysqli_query($connection, $query);
+                if($create_comment_query){
                     echo "<h4 class='boja'>You're message has been send</h4>";
                 }
 
+                $query = "UPDATE posts SET post_comment_count = $post_comment_count + 1 WHERE post_id = $the_post_id";
+                $updated_comment_number = mysqli_query($connection, $query);
     
+                
             }
                 ?>
+
+            <!-- Comments Form -->
+            <div class="well">
 
             
                 <h4>Leave a Comment:</h4>
@@ -107,6 +108,7 @@
                     <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                 </form>
                 <hr/>
+            </div>
 
             <!-- Posted Comments -->
 
@@ -115,16 +117,13 @@
             $select_comment_query = mysqli_query($connection, $query);
             if(!$select_comment_query){
                 die('Query Faild' .mysqli_error($connection));
-            }
-
-            $query = "UPDATE posts SET post_comment_count = $post_comment_count + 1 WHERE post_id = $the_post_id";
-            $updated_comment_number = mysqli_query($connection, $query);
-
-            while($row = mysqli_fetch_assoc($select_comment_query)){
-                $comment_date = $row['comment_date'];
-                $comment_content = $row['comment_content'];
-                $comment_author = $row['comment_author'];
-            
+            } else {
+                
+                while($row = mysqli_fetch_assoc($select_comment_query)){
+                    $comment_date = $row['comment_date'];
+                    $comment_content = $row['comment_content'];
+                    $comment_author = $row['comment_author'];
+                  
             ?>
 
                 <!-- Comment -->
@@ -138,8 +137,8 @@
                         </h4><?php echo $comment_content; ?>
                     </div>
                 </div>
+                <?php }} ?>
 
-            <?php } ?>
             
                 <!-- Pager -->
                 <ul class="pager">

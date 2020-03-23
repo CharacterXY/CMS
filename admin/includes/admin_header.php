@@ -1,6 +1,7 @@
 <?php include "functions.php"; ?>
 <?php include "../includes/db.php"; ?>
 <?php ob_start(); ?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="hr">
 
