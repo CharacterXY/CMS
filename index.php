@@ -28,10 +28,8 @@
                     $post_image = $row['post_image'];
                     $post_status = $row['post_status'];
 
-                    if($post_status !== 'published'){
-                     
-                        echo "<h2>NO POST SORRY</h1>";
-                    } else {
+                    if($post_status == 'published'){
+  
                               
                 ?>
                 
@@ -49,8 +47,9 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?> </p>
                 <hr>
+                <a href="post.php?p_id=<?php echo $post_id; ?>">
                 <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
-                
+                </a>
                 <hr>
                 <p><?php echo $post_content; ?></p>
                 

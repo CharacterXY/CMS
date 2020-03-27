@@ -60,6 +60,13 @@ while($row = mysqli_fetch_assoc($select_posts_by_id)){
         $update_post = mysqli_query($connection, $query);
 
         confirmQuery($update_post);
+     
+        echo "<p class='bg-success'>You're post has edit successfully <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit more Posts</a> </p>";
+     
+        
+        ?>
+        <hr />
+        <?php
 
     }
 ?>              
@@ -107,11 +114,26 @@ while($row = mysqli_fetch_assoc($select_posts_by_id)){
         <label for="post_author">Post author</label>
         <input type="text" class="form-control" name="post_author" value="<?php echo $post_author; ?>">
     </div>
+    
+    <div class="form-gorup">
+    <select name="post_status" id="">
+        <option value='<?php echo $post_status ;?>'><?php echo $post_status; ?></option>
+        <?php
+        if($post_status == 'published'){
 
-    <div class=post_status">
+            echo "<option value='draft'>Draft</option>";  
+        } else {
+            echo "<option value='published'>Published</option>"; 
+        }
+ 
+        ?>
+    </select>
+    </div>
+
+ <!--    <div class=form-gorup">
         <label for="post_author">Status</label>
         <input type="text" class="form-control" name="post_status" value="<?php echo $post_status; ?>">
-    </div>
+    </div> -->
 
     <div class="form-group">
         <br />
@@ -121,7 +143,7 @@ while($row = mysqli_fetch_assoc($select_posts_by_id)){
 
     <div class="form-group">
         <label for="post_content">Body</label>
-        <textarea  type="text"  class="form-control" name="post_content" cols="30" rows="10"><?php echo $post_content; ?></textarea>
+        <textarea  type="text"  class="form-control" name="post_content" id=body cols="30" rows="10"><?php echo $post_content; ?></textarea>
     </div>
 
     <div class="form-group">

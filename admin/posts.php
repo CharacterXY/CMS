@@ -1,10 +1,5 @@
 <?php include "includes/admin_header.php"; ?>
-
-
     <div id="wrapper">
-
-
-
 
         <!-- Navigation -->
 
@@ -12,7 +7,7 @@
        
 
         <div id="page-wrapper">
-
+        
             <div class="container-fluid">
 
                 <!-- Page Heading -->
@@ -72,7 +67,7 @@
 
     </div>
     <!-- /#wrapper -->
-
+   
 <?php include "includes/admin_footer.php"; ?>
 
 
