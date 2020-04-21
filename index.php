@@ -16,34 +16,72 @@
 
                 <?php 
 
-                $query = "SELECT * FROM posts ";
+                $per_page = 2;
+
+                if(isset($_GET['page'])){
+
+                $page = $_GET['page'];
+
+               } else {
+                $page = '';
+        
+                }
+
+                if($page == '' || $page == 1){
+                    $page_1 = 0;
+
+                } else {
+                    $page_1 = ($page * $per_page) - $per_page;
+               
+                }
+
+                if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
+                    $query = "SELECT * FROM posts ";
+                } else if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'subscriber') {
+                    $query = "SELECT * FROM posts WHERE post_status = 'published' ";
+                } else {
+                    header("Location: login.php");
+                }
+
+                $posts_count = mysqli_query($connection, $query);
+                $count = mysqli_num_rows($posts_count);
+                
+
+                if($count < 1){
+                    echo "<h3 class='text-center'>No posts available</h3>";
+                } else {
+
+
+                $count = ceil($count /  $per_page);
+        
+                $query = "SELECT * FROM posts LIMIT $page_1, $per_page";
                 $select_all_post = mysqli_query($connection, $query);
 
                 while($row = mysqli_fetch_assoc($select_all_post)){
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
+                    $post_user = $row['post_user'];
                     $post_author = $row['post_author'];
                     $post_content = substr($row['post_content'],0 , 500);
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_status = $row['post_status'];
 
-                    if($post_status == 'published'){
-  
-                              
+                
                 ?>
                 
                 <h1 class="page-header">
                     Page Heading
                     <small>Secondary Text</small>
                 </h1>
+
                 
                 <!-- First Blog Post -->          
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author; ?></a>
+                    by <a href="admin/author_posts.php?author=<?php echo $post_user; ?>&p_id=<?php echo $post_id; ?>"><?php echo $post_user ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?> </p>
                 <hr>
@@ -57,7 +95,7 @@
                 
                 <hr>
                 
-                <?php } } ?>
+                <?php }  } ?>
             
                 <!-- Pager -->
                 <ul class="pager">
@@ -81,5 +119,22 @@
 
         <hr>
     </div>
+
+    <ul class="pager">
+        <?php
+
+        for($i = 1; $i <= $count; $i++){
+
+            if($i == $page){
+
+               echo "<li><a class='active_link' href='index.php?page=$page'>$page</a></li>";
+            } else {
+
+                echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+            }
+
+        }
+        ?>
+    </ul>
 
 <?php include "includes/footer.php"; ?>

@@ -2,7 +2,7 @@
 <?php 
    if(isset($_POST['create_post'])){
    $post_title = $_POST['post_title'];
-   $post_author = $_POST['post_author'];
+   $post_user = $_POST['post_user'];
    $post_category_id = $_POST['post_category_id'];
    $post_status = $_POST['post_status'];
    $post_image = $_FILES['post_image']['name'];
@@ -14,14 +14,13 @@
 
    move_uploaded_file($post_image_temp, "../images/$post_image" );
 
-   $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tag, post_status) VALUES ('{$post_category_id}', '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tag}',  '{$post_status}') ";
+   $query = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tag, post_status) VALUES ('{$post_category_id}', '{$post_title}', '{$post_user}', now(), '{$post_image}', '{$post_content}', '{$post_tag}',  '{$post_status}') ";
 
    $create_post_query = mysqli_query($connection, $query);
 
    $the_post_id = mysqli_insert_id($connection);
 
    confirmQuery($create_post_query);
-
    echo "<p class='bg-success'>Post has been created successfully <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit more Posts</a> </p>";
 
   
@@ -37,6 +36,7 @@
     </div>
 
     <div class="form-group">
+        <label for="category">Choose Category :</label>
         <select name="post_category_id" id="">
         <?php
 
@@ -67,10 +67,44 @@
     </select>
 </div>
 
-    <div class="form-group">
+ <!--    <div class="form-group">
         <label for="post_author">Post author</label>
         <input type="text" class="form-control" name="post_author">
-    </div>
+    </div> -->
+    
+    
+    <div class="form-group">
+        <label for="users">Choose User :</label>
+        <select name="post_user" id="">
+        <?php
+
+        $query = "SELECT * FROM users";
+        $select_users = mysqli_query($connection, $query);
+
+        confirmQuery($select_categories); // izbacit ce error ako nema podataka ako ima ide dalje..
+                                                
+        while($row = mysqli_fetch_assoc($select_users)){
+        
+        $user_id = $row['user_id'];
+        $username = $row['username'];
+
+       /*  if($row['user_id'] == $username)
+        {
+            $sel = "selected";
+        }
+        else
+        {
+            $sel = '';
+        } */
+
+        echo "<option value='{$username}'>{$username}</option>";
+     
+        }
+        
+        ?>
+    </select>
+</div>
+
 
     <div class=form-group"> 
         <select name="post_status" id="">

@@ -1,11 +1,17 @@
+
 <?php include "includes/admin_header.php"; ?>
+
+<?php
+
+if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
+    ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-$("small").click(function(){
-$(this).hide();
-});
-});
+    $(document).ready(function(){
+    $("small").click(function(){
+    $(this).hide();
+    });
+    });
 </script>
 
     <div id="wrapper">
@@ -145,21 +151,21 @@ $(this).hide();
 </div>
 <!-- /.row -->
 <?php
-$query = "SELECT * FROM posts WHERE post_status = 'published' ";
-$select_all_publish = mysqli_query($connection, $query);
-$numbers_of_published_posts = mysqli_num_rows($select_all_publish);
+    $query = "SELECT * FROM posts WHERE post_status = 'published' ";
+    $select_all_publish = mysqli_query($connection, $query);
+    $numbers_of_published_posts = mysqli_num_rows($select_all_publish);
 
-$query = "SELECT * FROM posts WHERE post_status = 'draft' ";
-$select_all_draft = mysqli_query($connection, $query);
-$numbers_of_draft_posts = mysqli_num_rows($select_all_draft);
+    $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
+    $select_all_draft = mysqli_query($connection, $query);
+    $numbers_of_draft_posts = mysqli_num_rows($select_all_draft);
 
-$query = "SELECT * FROM comments WHERE comment_status = 'unnaproved' ";
-$select_all_unnaproved_comments = mysqli_query($connection, $query);
-$numbers_of_unnaproved_comments = mysqli_num_rows($select_all_unnaproved_comments);
+    $query = "SELECT * FROM comments WHERE comment_status = 'unnaproved' ";
+    $select_all_unnaproved_comments = mysqli_query($connection, $query);
+    $numbers_of_unnaproved_comments = mysqli_num_rows($select_all_unnaproved_comments);
 
-$query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
-$select_all_subscriber = mysqli_query($connection, $query);
-$numbers_of_subscriber_users = mysqli_num_rows($select_all_subscriber);
+    $query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
+    $select_all_subscriber = mysqli_query($connection, $query);
+    $numbers_of_subscriber_users = mysqli_num_rows($select_all_subscriber);
 
 ?>
 
@@ -222,6 +228,12 @@ $numbers_of_subscriber_users = mysqli_num_rows($select_all_subscriber);
 
 <?php include "includes/admin_footer.php"; ?>
 
+    <?php } else {
+        header("Location: ../index.php");
+    
+    }
+
+    ?>
 <style>
 .ime {
 

@@ -10,12 +10,12 @@
    $username = $_POST['username'];
    $user_email = $_POST['user_email'];
    $user_password = $_POST['user_password'];
-   
-   
 
+   $password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10));
+   
    /* move_uploaded_file($user_image_temp, "../images/$user_image" ); */
 
-   $query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) VALUES ('{$user_firstname}', '{$user_lastname}', '{$user_role}', '{$username}', '{$user_email}', '{$user_password}') ";
+   $query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) VALUES ('{$user_firstname}', '{$user_lastname}', '{$user_role}', '{$username}', '{$user_email}', '{$password}') ";
 
    $create_user_query = mysqli_query($connection, $query);
 
@@ -42,16 +42,12 @@
 
 
     <div class="form-group">
-    
         <select name="user_role" id="">
-           <option value="subsriber">Select Options</option>
+           <option value="subscriber">Select Options</option>
            <option value="admin">Admin</option>
-           <option value="subsriber">Subscriber</option>
-
+           <option value="subscriber">Subscriber</option>
         </select>
-
     </div>
-
 
   <!--   <div class="form-group">
         <label for="user_image">User Image</label>

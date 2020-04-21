@@ -1,7 +1,9 @@
-<?php include "functions.php"; ?>
-<?php include "../includes/db.php"; ?>
-
 <?php ob_start(); ?>
+<?php include "../includes/db.php"; ?>
+<?php include "functions.php"; ?>
+
+
+
 <?php session_start(); ?>
 
 <?php 
@@ -10,7 +12,7 @@
 
     header("Location: ../index.php");
     
-} 
+} else {
 
 ?>
 
@@ -29,6 +31,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -45,7 +48,10 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
     
     <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
-   
+    <script src="js/jquery.js"></script>
+    
+    
+    <?php } ?>
 
 </head>
 

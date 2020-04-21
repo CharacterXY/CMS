@@ -14,7 +14,7 @@
 
 }); 
  
-  $(document).ready(function(){
+$(document).ready(function(){
 
     $('#selectAllBoxes').click(function(event){
         if(this.checked){
@@ -28,4 +28,52 @@
 
         }
     });
-});  
+
+    
+   
+ var div_box = "<div id='load-screen'><div id='loading'></div></div>";
+
+    $("body").prepend(div_box);
+    $('#load-screen').delay(500).fadeOut(800, function(){
+        $($this).remove();
+    }); 
+
+    
+
+
+});
+
+
+$(document).ready(function(){
+    $('#selectAllBoxes').click(function(event){
+        if(this.checked){
+            $('.checkedComments').each(function(){
+                this.checked = true;
+            });
+        } else {
+            $('.checkedComments').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+});
+
+
+function loadUsersOnline(){
+
+    $.get("functions.php?onlineusers=result", function(data){
+        $(".usersonline").text(data);
+    });
+}
+
+setInterval(function(){
+
+loadUsersOnline();
+
+}, 1000);
+
+
+
+
+
+

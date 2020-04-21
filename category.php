@@ -16,21 +16,33 @@
 
                 if(isset($_GET['category'])){
                     $post_category_id = $_GET['category'];
+
+
+                
+                if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
+                    $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id ";
+                } else {
+                    $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id AND post_status = 'published' ";
+
                 }
-
-
-                $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id ";
+                
                 $select_all_post = mysqli_query($connection, $query);
+
+                if(mysqli_num_rows($select_all_post) < 1){
+
+                    echo "<h3 class='text-center'>No category available</h3>";
+                
+                } else {
 
                 while($row = mysqli_fetch_assoc($select_all_post)){
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
-                    $post_author = $row['post_author'];
+                    $post_user = $row['post_user'];
                     $post_content = $row['post_content'];
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                    
-                }
+                
                 ?>
 
                 <h1 class="page-header">
@@ -43,7 +55,7 @@
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author; ?></a>
+                    by <a href="index.php"><?php echo $post_user; ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?> </p>
                 <hr>
@@ -54,9 +66,13 @@
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 
                 <hr>
-                  
-            
-            
+
+            <?php } } } else {
+                header ("Loaction: index.php");
+
+            }
+            ?>
+
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="previous">
@@ -69,12 +85,14 @@
 
             <!-- Blog Sidebar Widgets Column -->
 
-            <?php include "includes/sidebar.php"; ?>
-
+           
+           
         </div>
+            <!-- Blog Sidebar Widgets Column -->
+            <?php include "includes/sidebar.php"; ?>
         </div>
         <!-- /.row -->
-
+        
        <hr>
     </div>
 <?php include "includes/footer.php"; ?>

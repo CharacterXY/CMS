@@ -16,21 +16,49 @@
                 <ul class="nav navbar-nav">
 
                 <?php 
-                $query = "SELECT * FROM categories";
+                $query = "SELECT * FROM categories LIMIT 3";
                 $select_all_categories_query = mysqli_query($connection, $query);
 
-/*                 while($row = mysqli_fetch_assoc($select_all_categories_query)){
+                while($row = mysqli_fetch_assoc($select_all_categories_query)){
 
-                   $data = $row['category_name'];
-                   echo "<li><a href=''>{$data}</a></li>";
-                   
-                   
-                } */
+                   $category_name = $row['category_name'];
+                   $category_id = $row['category_id'];
 
+                   $category_class = '';
+                   $registration_class = '';
+                   
+                   $pageName = basename($_SERVER['PHP_SELF']);
+                   $registration = 'registration.php';
+                   $contact = 'contat.php';
+                   $admin = '../admin';
+
+                   if(isset($_GET['category']) && $_GET['category'] == $category_id ) {
+
+                    $category_class = 'active';
+
+                   } elseif ($pageName == $registration){
+
+                    $registration_class = 'active';
+
+                   } else if ($pageName == $contact) {
+                       $contact_class = 'active';
+
+                   } else if ($pageName == $admin){
+                       $admin_class = 'active';
+                   }
+
+                   echo "<li class='$category_class'><a href='category.php?category={$category_id}'>{$category_name}</a></li>";
+                             
+                } 
                 ?> 
-                
+     
                 <li>
                    <a href="admin">Admin</a>
+                </li>
+
+
+                <li class="<?php echo $registration_class; ?>">
+                   <a href="registration.php">Registration</a>
                 </li>
 
                 <?php
@@ -44,13 +72,10 @@
                        
                     }
                 }
-
-
-
                 ?>
 
-                <li>
-                   <a href="#">Contact</a>
+                <li class="<?php echo $contact_class; ?>">
+                   <a  href="../edwin_cms/contat.php">Contact</a>
                 </li>
 
                  </ul>

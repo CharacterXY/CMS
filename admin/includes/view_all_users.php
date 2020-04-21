@@ -81,16 +81,23 @@ if(isset($_GET['change_to_subscriber'])){
 
 
 if(isset($_GET['delete'])){
-    $user_id = $_GET['delete'];
 
-    $query = "DELETE FROM users WHERE user_id = {$user_id}";
-    $delete_user = mysqli_query($connection, $query);
+    if(isset($_SESSION['user_role'])){
+        if($_SESSION['user_role'] == 'admin'){
 
-    if(!$delete_user){
-        die("MYSQL ERROR " .mysqli_error($connection));
-    } else {   
-        header("Location: users.php");
-        
+            $user_id = $_GET['delete'];
+
+
+            $query = "DELETE FROM users WHERE user_id = {$user_id}";
+            $delete_user = mysqli_query($connection, $query);
+
+            if(!$delete_user){
+                die("MYSQL ERROR " .mysqli_error($connection));
+            } else {   
+                header("Location: users.php");
+                
+            }
+        }
     } 
 }
 ?>

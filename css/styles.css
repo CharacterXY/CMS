@@ -1,0 +1,14 @@
+.pager li .active_link {
+
+    background: #000 !important;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 30%;
+
+}
+
+
+a:hover {
+     color: purple;
+}
+
